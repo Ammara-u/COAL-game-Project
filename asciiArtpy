@@ -1,0 +1,12 @@
+from PIL import Image
+
+im = Image.open("logo.png").resize((320, 200)).convert("P")
+data = list(im.getdata())
+
+with open("logo.asm", "w") as f:
+    f.write("myImage db ")
+    for i, b in enumerate(data):
+        f.write(f"0x{b:02X},")
+        if (i + 1) % 16 == 0:
+            f.write("\n  db ")
+print("Saved as logo.asm (ready to include in assembly)")
